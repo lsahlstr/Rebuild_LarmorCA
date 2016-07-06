@@ -1,1 +1,21 @@
 # Rebuild_LarmorCA
+
+# Initialize local git repository and push to remote
+git init
+echo "# Rebuild_LarmorCA" >> 0README
+git add 0README
+git commit -m "first commit"
+git remote add origin http://github.com/lsahlstr/Rebuild_LarmorCA.git
+git push -u origin master
+
+# New branch
+git checkout -b la1
+git push -u origin la1
+
+# Add scripts to new branch
+git add *.py
+git commit -m "added python scripts"
+git push -u origin la1
+
+# Checkout the master branch
+git checkout master
