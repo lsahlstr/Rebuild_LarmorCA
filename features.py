@@ -3,12 +3,14 @@ from math import sqrt
 def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zcoors):
     '''Function for computing geometric features and returning the responses (i.e., the
     chemical shift value) for a given nucleus across all residues. If the coordinates 
-    for a nucleus do not exist, then the features and responses are ignored.'''
+    for a nucleus do not exist, then the features and responses are ignored. This is 
+    taken care of by the "flag" variable below; it is set to zero if the coordinates do
+    not exist.'''
     
     # Loop over all residue numbers
     for i in range(resnums[0],resnums[-1]+1):
         
-        cs = cs_info.get(i, {}).get(nucleus)  # Get the chemical shift
+        cs = cs_info.get(i, {}).get(nucleus)  # Get the chemical shift for nucleus of interest
         
         # Only compute geometric features if cs exists for residue i
         if cs:
@@ -20,92 +22,92 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
             flag = 1
 
             # central residue (i)
-            x = xcoors.get(i, {}).get(nucleus)
-            y = ycoors.get(i, {}).get(nucleus)
-            z = zcoors.get(i, {}).get(nucleus)
+            x = xcoors.get(i, {}).get('CA')
+            y = ycoors.get(i, {}).get('CA')
+            z = zcoors.get(i, {}).get('CA')
             if not x and not y and not z:
                 flag = 0
             
             # previous residue (i-1)
             if flag == 1:
-                xminus1 = xcoors.get(i-1, {}).get(nucleus)
-                yminus1 = ycoors.get(i-1, {}).get(nucleus)
-                zminus1 = zcoors.get(i-1, {}).get(nucleus)
+                xminus1 = xcoors.get(i-1, {}).get('CA')
+                yminus1 = ycoors.get(i-1, {}).get('CA')
+                zminus1 = zcoors.get(i-1, {}).get('CA')
                 if not xminus1 and not yminus1 and not zminus1:
                     flag = 0
 
             # next residue (i+1)
             if flag == 1:
-                xplus1 = xcoors.get(i+1, {}).get(nucleus)
-                yplus1 = ycoors.get(i+1, {}).get(nucleus)
-                zplus1 = zcoors.get(i+1, {}).get(nucleus)  
+                xplus1 = xcoors.get(i+1, {}).get('CA')
+                yplus1 = ycoors.get(i+1, {}).get('CA')
+                zplus1 = zcoors.get(i+1, {}).get('CA')  
                 if not xplus1 and not yplus1 and not zplus1: 
                     flag = 0
 
             # i-2
             if flag == 1:
-                xminus2 = xcoors.get(i-2, {}).get(nucleus)
-                yminus2 = ycoors.get(i-2, {}).get(nucleus)
-                zminus2 = zcoors.get(i-2, {}).get(nucleus)
+                xminus2 = xcoors.get(i-2, {}).get('CA')
+                yminus2 = ycoors.get(i-2, {}).get('CA')
+                zminus2 = zcoors.get(i-2, {}).get('CA')
                 if not xminus2 and not yminus2 and not zminus2:
                     flag = 0
 
             # i+2
             if flag == 1:
-                xplus2 = xcoors.get(i+2, {}).get(nucleus)
-                yplus2 = ycoors.get(i+2, {}).get(nucleus)
-                zplus2 = zcoors.get(i+2, {}).get(nucleus)  
+                xplus2 = xcoors.get(i+2, {}).get('CA')
+                yplus2 = ycoors.get(i+2, {}).get('CA')
+                zplus2 = zcoors.get(i+2, {}).get('CA')  
                 if not xplus2 and not yplus2 and not zplus2: 
                     flag = 0
 
             # i-3
             if flag == 1:
-                xminus3 = xcoors.get(i-3, {}).get(nucleus)
-                yminus3 = ycoors.get(i-3, {}).get(nucleus)
-                zminus3 = zcoors.get(i-3, {}).get(nucleus)
+                xminus3 = xcoors.get(i-3, {}).get('CA')
+                yminus3 = ycoors.get(i-3, {}).get('CA')
+                zminus3 = zcoors.get(i-3, {}).get('CA')
                 if not xminus3 and not yminus3 and not zminus3:
                     flag = 0
 
             # i+3
             if flag == 1:
-                xplus3 = xcoors.get(i+3, {}).get(nucleus)
-                yplus3 = ycoors.get(i+3, {}).get(nucleus)
-                zplus3 = zcoors.get(i+3, {}).get(nucleus)  
+                xplus3 = xcoors.get(i+3, {}).get('CA')
+                yplus3 = ycoors.get(i+3, {}).get('CA')
+                zplus3 = zcoors.get(i+3, {}).get('CA')  
                 if not xplus3 and not yplus3 and not zplus3: 
                     flag = 0
 
             # i-4
             if flag == 1:
-                xminus4 = xcoors.get(i-4, {}).get(nucleus)
-                yminus4 = ycoors.get(i-4, {}).get(nucleus)
-                zminus4 = zcoors.get(i-4, {}).get(nucleus)
+                xminus4 = xcoors.get(i-4, {}).get('CA')
+                yminus4 = ycoors.get(i-4, {}).get('CA')
+                zminus4 = zcoors.get(i-4, {}).get('CA')
                 if not xminus4 and not yminus4 and not zminus4:
                     flag = 0
 
             # i+4
             if flag == 1:
-                xplus4 = xcoors.get(i+4, {}).get(nucleus)
-                yplus4 = ycoors.get(i+4, {}).get(nucleus)
-                zplus4 = zcoors.get(i+4, {}).get(nucleus)  
+                xplus4 = xcoors.get(i+4, {}).get('CA')
+                yplus4 = ycoors.get(i+4, {}).get('CA')
+                zplus4 = zcoors.get(i+4, {}).get('CA')  
                 if not xplus4 and not yplus4 and not zplus4: 
                     flag = 0
 
             # i-5
             if flag == 1:
-                xminus5 = xcoors.get(i-5, {}).get(nucleus)
-                yminus5 = ycoors.get(i-5, {}).get(nucleus)
-                zminus5 = zcoors.get(i-5, {}).get(nucleus)
+                xminus5 = xcoors.get(i-5, {}).get('CA')
+                yminus5 = ycoors.get(i-5, {}).get('CA')
+                zminus5 = zcoors.get(i-5, {}).get('CA')
                 if not xminus5 and not yminus5 and not zminus5:
                     flag = 0
 
             # i+5
             if flag == 1:
-                xplus5 = xcoors.get(i+5, {}).get(nucleus)
-                yplus5 = ycoors.get(i+5, {}).get(nucleus)
-                zplus5 = zcoors.get(i+5, {}).get(nucleus)  
+                xplus5 = xcoors.get(i+5, {}).get('CA')
+                yplus5 = ycoors.get(i+5, {}).get('CA')
+                zplus5 = zcoors.get(i+5, {}).get('CA')  
                 if not xplus5 and not yplus5 and not zplus5: 
                     flag = 0
-
+                    
             # Compute geometric features if necessary coordinates exist
             if flag == 1:
     
@@ -138,8 +140,55 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
     
                 # Feature 10: Distance => i, i+5
                 f10 = abs(sqrt((x-xplus5)**2 + (y-yplus5)**2 + (z-zplus5)**2))
-    
-                tmp_features = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10)
+                
+                # j: closest residue to i that is at least 6 residues FORWARD in sequence
+                f21 = 0
+                min_res = 0  # WILL NEED TO STORE THIS FOR DETERMINING j+1, j+2, ETC.
+                min_dist = 999999
+                if i < resnums[-6]:  # i must be more than 6 residues from the last residue
+                    #print 'i = ' + str(i)
+                    for j in range(i+6,resnums[-1]+1):
+                        #print j
+                        
+                        xj = xcoors.get(j, {}).get('CA')
+                        yj = ycoors.get(j, {}).get('CA')
+                        zj = zcoors.get(j, {}).get('CA')
+                        
+                        dist = abs(sqrt((x-xj)**2 + (y-yj)**2 + (z-zj)**2))
+                        #print dist
+                        if dist < min_dist:
+                            min_dist = dist
+                        #print 'min dist: ' + str(min_dist)
+                        
+                        f21 = min_dist
+                             
+                #print ""
+                
+                # k: closest residue to i that is at least 6 residues BACKWARDS in sequence
+                f36 = 0
+                min_res = 0  # reset min_res; WILL NEED TO STORE THIS FOR DETERMINING k+1, k+2, ETC.
+                min_dist = 999999 # reset min_dist
+                if i > resnums[5]:  # i must be more than 6 residues from the first residue
+                    #print 'i = ' + str(i)
+                
+                    for k in range(i-6,resnums[0]-1,-1):  # count backwards (-1 for decrement); have to go to resnum[0]-1
+                        #print k
+                    
+                        xk = xcoors.get(k, {}).get('CA')
+                        yk = ycoors.get(k, {}).get('CA')
+                        zk = zcoors.get(k, {}).get('CA')
+                    
+                        dist = abs(sqrt((x-xk)**2 + (y-yk)**2 + (z-zk)**2))
+                        #print dist
+                        if dist < min_dist:
+                            min_dist = dist
+                        #print 'min dist: ' + str(min_dist)
+                    
+                        f36 = min_dist
+                             
+                #print ""
+            
+                tmp_features = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f21,f36)
                 
                 features.append(tmp_features)
                 responses.append(cs)
