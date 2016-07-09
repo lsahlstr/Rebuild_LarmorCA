@@ -26,6 +26,8 @@ if __name__ == "__main__":
     # Predict regression target for the test set
     predicted = estimator.predict(X_train)
     cc = np.corrcoef(y_train,predicted)
+    print cc
+    print estimator
     
     predicted = estimator.predict(X_test)
     cc = np.corrcoef(y_test,predicted)
