@@ -111,8 +111,10 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                 if not xplus5 and not yplus5 and not zplus5: 
                     flag = 0
                     
-            # Compute geometric features if necessary coordinates exist
-            if flag == 1:
+            # Compute geometric features if necessary coordinates exist and i is 
+            # more than 6 residues away from the first residue (for determining j)
+            # and more than 6 residues away from the last residue (for determining k)
+            if flag == 1 and (i > resnums[5] and i < resnums[-6]):
     
                 # Feature 1: Distance => i, i-5
                 f1 = abs(sqrt((x-xminus5)**2 + (y-yminus5)**2 + (z-zminus5)**2))
@@ -164,9 +166,7 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                         #print 'min dist: ' + str(min_dist)
                         
                         f21 = min_dist
-                             
-                #print ""
-                
+                                        
                 # k: closest residue to i that is at least 6 residues BACKWARDS in sequence
                 f36 = 0
                 min_res = 0  # reset min_res; WILL NEED TO STORE THIS FOR DETERMINING k+1, k+2, ETC.
@@ -188,10 +188,8 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                         #print 'min dist: ' + str(min_dist)
                     
                         f36 = min_dist
-                             
-                #print ""
                 
-                #features_res_tmp = (f1,f2,f3)
+                #features_res_tmp = (f21,f36)
                 features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f21,f36)
                 
                 features_tmp.append(features_res_tmp)

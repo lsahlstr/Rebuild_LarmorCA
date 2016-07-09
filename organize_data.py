@@ -53,8 +53,6 @@ def OrganizeData(nucleus, flag='test'):
         
         # Get features and responses
         features, responses = Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zcoors)
-        print len(features)
-        print len(responses)
         
         # Convert lists to numpy arrays
         features_arr = np.asarray(features)
