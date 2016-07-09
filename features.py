@@ -7,6 +7,9 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
     taken care of by the "flag" variable below; it is set to zero if the coordinates do
     not exist.'''
     
+    features_tmp = [] # temporary feature list just for this molecule
+    responses_tmp = [] # temporary response list just for this molecule
+    
     # Loop over all residue numbers
     for i in range(resnums[0],resnums[-1]+1):
         
@@ -15,8 +18,8 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
         # Only compute geometric features if cs exists for residue i
         if cs:
             
-            # Tuple for storing geometric features (want to append to list)
-            tmp_features = ()
+            # Tuple for storing geometric features for residue i (want to append to list)
+            features_res_tmp = ()
             
             # Flag for determining whether coordinates exist for computing geometric features
             flag = 1
@@ -187,10 +190,18 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                         f36 = min_dist
                              
                 #print ""
-            
-                tmp_features = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f21,f36)
                 
-                features.append(tmp_features)
-                responses.append(cs)
+                #features_res_tmp = (f1,f2,f3)
+                features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f21,f36)
+                
+                features_tmp.append(features_res_tmp)
+                responses_tmp.append(cs)
+    
+    # For residue i features, combine with features for i+1 and i-1 
+    #responses = responses_tmp[1:len(responses)-1]
+    for i in range(1,len(features_tmp)-1):
+        tmp = features_tmp[i] + features_tmp[i+1] + features_tmp[i-1]
+        features.append(tmp)
+        responses.append(responses_tmp[i])
     
     return(features, responses)

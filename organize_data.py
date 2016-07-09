@@ -9,8 +9,10 @@ import numpy as np
 def OrganizeData(nucleus, flag='test'):
     print str(flag) + " set for nucleus " + str(nucleus)
 
-    features = []           # List for storing geometric features
+    features = []     # List for storing geometric features
     responses = []    # List for storing cs values (responses)
+    features2 = []
+    responses2 = []
     
     # Determine whether to organize data for the training or testing set
     if flag == 'test':
@@ -51,9 +53,11 @@ def OrganizeData(nucleus, flag='test'):
         
         # Get features and responses
         features, responses = Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zcoors)
+        print len(features)
+        print len(responses)
         
         # Convert lists to numpy arrays
         features_arr = np.asarray(features)
         responses_arr = np.asarray(responses)
-        
+    
     return(features_arr, responses_arr)

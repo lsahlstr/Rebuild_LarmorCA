@@ -10,7 +10,7 @@ import numpy as np
 if __name__ == "__main__":
     
     nucleus = 'N' # make command line option; supported nuclei are ['H','N','CA','HA','CB','C']
-    X_train,y_train = OrganizeData(nucleus, 'train')        
+    X_train,y_train = OrganizeData(nucleus, 'train')
     X_test, y_test = OrganizeData(nucleus, 'test')
         
     # Set the parameters for the random forest estimator    
@@ -24,6 +24,9 @@ if __name__ == "__main__":
     print estimator.score(X_test,y_test)
         
     # Predict regression target for the test set
+    predicted = estimator.predict(X_train)
+    cc = np.corrcoef(y_train,predicted)
+    
     predicted = estimator.predict(X_test)
     cc = np.corrcoef(y_test,predicted)
     print cc
