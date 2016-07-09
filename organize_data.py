@@ -1,5 +1,4 @@
 import sys, re, os, glob
-sys.path.append('/Users/lsahlstr/scripts/python/modules')
 from math import sqrt
 from pdbReader import PDBReader
 from csReader import CSReader

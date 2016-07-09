@@ -9,7 +9,7 @@ import numpy as np
 
 if __name__ == "__main__":
     
-    nucleus = 'N' # make command line option; supported nuclei are ['H','N','CA','HA','CB','C']
+    nucleus = 'CA' # make command line option; supported nuclei are ['H','N','CA','HA','CB','C']
     X_train,y_train = OrganizeData(nucleus, 'train')
     X_test, y_test = OrganizeData(nucleus, 'test')
         
