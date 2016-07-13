@@ -13,7 +13,7 @@ if __name__ == "__main__":
     nucleus = 'N' # make command line option; supported nuclei are ['H','N','CA','HA','CB','C']
     
     # Generate training and test set
-    X_train,y_train = OrganizeData(nucleus, 'train')    
+    X_train,y_train = OrganizeData(nucleus, 'train')
     X_test, y_test = OrganizeData(nucleus, 'test')
     
     # Feature scaling

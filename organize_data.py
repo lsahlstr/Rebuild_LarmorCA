@@ -3,7 +3,6 @@ from math import sqrt
 from pdbReader import PDBReader
 from csReader import CSReader
 from features import Features
-#from halfcoors import HalfCoors
 import numpy as np
 
 def OrganizeData(nucleus, flag='test'):
@@ -44,7 +43,7 @@ def OrganizeData(nucleus, flag='test'):
         xcoors = mc.xcoors()
         ycoors = mc.ycoors()
         zcoors = mc.zcoors()
-            
+                    
         # Resnum list
         resnums = list(set(mc.resnums()))
         

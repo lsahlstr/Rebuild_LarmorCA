@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 class Molecule(object):
     '''A molecule with a name and a list of atoms.'''
     
@@ -63,10 +65,9 @@ class Molecule(object):
     
     def xcoors(self):
         '''Get dictionary of X coordinates for each atom'''
-        d = dict()
+        d = defaultdict(int)
         for atom in self.atoms:
-            if atom.res_num not in d:
-                d[atom.res_num] = {}        
+            d[atom.res_num] = {}        
     
         for atom in self.atoms:
             d[atom.res_num][atom.atom_name.strip()] = atom.xcoor    
@@ -75,10 +76,9 @@ class Molecule(object):
     
     def ycoors(self):
         '''Get dictionary of Y coordinates for each atom'''
-        d = dict()
+        d = defaultdict(int)
         for atom in self.atoms:
-            if atom.res_num not in d:
-                d[atom.res_num] = {}        
+            d[atom.res_num] = {}        
     
         for atom in self.atoms:
             d[atom.res_num][atom.atom_name.strip()] = atom.ycoor    
@@ -87,10 +87,9 @@ class Molecule(object):
     
     def zcoors(self):
         '''Get dictionary of Z coordinates for each atom'''
-        d = dict()
+        d = defaultdict(int)
         for atom in self.atoms:
-            if atom.res_num not in d:
-                d[atom.res_num] = {}        
+            d[atom.res_num] = {}        
     
         for atom in self.atoms:
             d[atom.res_num][atom.atom_name.strip()] = atom.zcoor    
@@ -102,16 +101,13 @@ class Molecule(object):
         coordinate is defined as the center-of-geometry between Ca(i) and
         Ca(i+1). Thus, the half coordinate is defined for all but the last
         residue.'''
-        d_xhalfcoors = dict()
-        d_yhalfcoors = dict()
-        d_zhalfcoors = dict()
+        d_xhalfcoors = defaultdict(int)
+        d_yhalfcoors = defaultdict(int)
+        d_zhalfcoors = defaultdict(int)
         for atom in self.atoms[:-1]:  # do not consider last residue
-            if atom.res_num not in d_xhalfcoors:
-                d_xhalfcoors[atom.res_num] = {}
-            if atom.res_num not in d_yhalfcoors:
-                d_yhalfcoors[atom.res_num] = {}
-            if atom.res_num not in d_zhalfcoors:
-                d_zhalfcoors[atom.res_num] = {}
+            d_xhalfcoors[atom.res_num] = {}
+            d_yhalfcoors[atom.res_num] = {}
+            d_zhalfcoors[atom.res_num] = {}
                       
         for i in range(0,len(self.atoms)-1):     
             
