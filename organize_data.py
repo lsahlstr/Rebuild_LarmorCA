@@ -3,6 +3,7 @@ from math import sqrt
 from pdbReader import PDBReader
 from csReader import CSReader
 from features import Features
+#from halfcoors import HalfCoors
 import numpy as np
 
 def OrganizeData(nucleus, flag='test'):
@@ -49,6 +50,9 @@ def OrganizeData(nucleus, flag='test'):
         
         # Atom name lists
         atomnames = mc.atom_names()
+        
+        # Get half coordinates
+        xhalfcoors, yhalfcoors, zhalfcoors = mc.halfcoors()
         
         # Get features and responses
         features, responses = Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zcoors)
