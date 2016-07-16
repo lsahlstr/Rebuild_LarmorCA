@@ -5,7 +5,7 @@ from sklearn import preprocessing
 from sklearn.ensemble.forest import RandomForestRegressor
 from sklearn.cross_validation import cross_val_score
 import sys
-import my_plotting
+#import my_plotting
 import numpy as np
 
 if __name__ == "__main__":
@@ -35,13 +35,13 @@ if __name__ == "__main__":
     cc = np.corrcoef(y_train,predicted)
     print cc
     print estimator
-    my_plotting.simple_plot_overlay(y_train,predicted)
+    #my_plotting.simple_plot_overlay(y_train,predicted)
     
     predicted = estimator.predict(X_test_scaled)
     cc = np.corrcoef(y_test,predicted)
     print cc
     print estimator
-    my_plotting.simple_plot_overlay(y_test,predicted)    
+    #my_plotting.simple_plot_overlay(y_test,predicted)    
     
     # score = cross_val_score(estimator, X_train, y_train)
 #     print score 

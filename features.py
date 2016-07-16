@@ -148,7 +148,7 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                 
                 #### j: closest residue to i that is at least 6 residues FORWARD in sequence ####
                 f21 = 0
-                min_res = 0  # WILL NEED TO STORE THIS FOR DETERMINING j+1, j+2, ETC.
+                closest_res = 0  # WILL NEED TO STORE THIS FOR DETERMINING j+1, j+2, ETC.
                 min_dist = 999999
                 if i < resnums[-6]:  # i must be more than 6 residues from the last residue
                     #print 'i = ' + str(i)
@@ -163,13 +163,50 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                         #print dist
                         if dist < min_dist:
                             min_dist = dist
+                            closest_res = j
+                            
                         #print 'min dist: ' + str(min_dist)
+                    
+                    # Feature 21: i,j
+                    f21 = min_dist
+                    
+                    # j
+                    j = closest_res  # rename to j for clarity below
+                    xj = xcoors.get(j, {}).get('CA')
+                    yj = ycoors.get(j, {}).get('CA')
+                    zj = zcoors.get(j, {}).get('CA')
+                    
+                    # j-1
+                    xj_minus1 = xcoors.get(j-1, {}).get('CA')
+                    yj_minus1 = ycoors.get(j-1, {}).get('CA')
+                    zj_minus1 = zcoors.get(j-1, {}).get('CA')
+                    
+                    # j+1
+                    xj_plus1 = xcoors.get(j+1, {}).get('CA')
+                    yj_plus1 = ycoors.get(j+1, {}).get('CA')
+                    zj_plus1 = zcoors.get(j+1, {}).get('CA')
+                    
+                    # j-2
+                    xj_minus2 = xcoors.get(j-2, {}).get('CA')
+                    yj_minus2 = ycoors.get(j-2, {}).get('CA')
+                    zj_minus2 = zcoors.get(j-2, {}).get('CA')
+                    
+                    # j+2
+                    xj_plus2 = xcoors.get(j+2, {}).get('CA')
+                    yj_plus2 = ycoors.get(j+2, {}).get('CA')
+                    zj_plus2 = zcoors.get(j+2, {}).get('CA')
+                    
+                    # Feature 20: Distance => i, j-1
+                    f20 = abs(sqrt((x-xj_minus1)**2 + (y-yj_minus1)**2 + (z-zj_minus1)**2))
+                    
+                    # Feature 22: Distance => i, j+1
+                    f22 = abs(sqrt((x-xj_plus1)**2 + (y-yj_plus1)**2 + (z-zj_plus1)**2))
                         
-                        f21 = min_dist
+                        
                                         
                 # k: closest residue to i that is at least 6 residues BACKWARDS in sequence
                 f36 = 0
-                min_res = 0  # reset min_res; WILL NEED TO STORE THIS FOR DETERMINING k+1, k+2, ETC.
+                closest_res = 0  # reset min_res; WILL NEED TO STORE THIS FOR DETERMINING k+1, k+2, ETC.
                 min_dist = 999999 # reset min_dist
                 if i > resnums[5]:  # i must be more than 6 residues from the first residue
                     #print 'i = ' + str(i)
@@ -185,12 +222,14 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                         #print dist
                         if dist < min_dist:
                             min_dist = dist
+                            closest_res = k
+                            
                         #print 'min dist: ' + str(min_dist)
                     
-                        f36 = min_dist
+                    f36 = min_dist
                 
                 #features_res_tmp = (f21,f36)
-                features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f21,f36)
+                features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f20,f21,f22,f36)
                 
                 features_tmp.append(features_res_tmp)
                 responses_tmp.append(cs)
