@@ -146,7 +146,7 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                 # Feature 10: Distance => i, i+5
                 f10 = abs(sqrt((x-xplus5)**2 + (y-yplus5)**2 + (z-zplus5)**2))
                 
-                # j: closest residue to i that is at least 6 residues FORWARD in sequence
+                #### j: closest residue to i that is at least 6 residues FORWARD in sequence ####
                 f21 = 0
                 min_res = 0  # WILL NEED TO STORE THIS FOR DETERMINING j+1, j+2, ETC.
                 min_dist = 999999

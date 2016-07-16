@@ -96,30 +96,29 @@ class Molecule(object):
 
         return d
     
-    def halfcoors(self):
-        '''Get dictionaries of X/Y/Z half coordinates for each atom. The half
-        coordinate is defined as the center-of-geometry between Ca(i) and
-        Ca(i+1). Thus, the half coordinate is defined for all but the last
-        residue.'''
-        d_xhalfcoors = defaultdict(int)
-        d_yhalfcoors = defaultdict(int)
-        d_zhalfcoors = defaultdict(int)
+    def pseudocenters(self):
+        '''Get dictionaries of X/Y/Z pseudocenters for each atom. The pseudo-
+        center is defined as the center-of-geometry between Ca(i) and Ca(i+1).
+        Thus, the pseudocenter is defined for all but the last residue.'''
+        d_xpseudocenters = defaultdict(int)
+        d_ypseudocenters = defaultdict(int)
+        d_zpseudocenters = defaultdict(int)
         for atom in self.atoms[:-1]:  # do not consider last residue
-            d_xhalfcoors[atom.res_num] = {}
-            d_yhalfcoors[atom.res_num] = {}
-            d_zhalfcoors[atom.res_num] = {}
+            d_xpseudocenters[atom.res_num] = {}
+            d_ypseudocenters[atom.res_num] = {}
+            d_zpseudocenters[atom.res_num] = {}
                       
         for i in range(0,len(self.atoms)-1):     
             
             atom_i = self.atoms[i]
             atom_iplus1 = self.atoms[i+1]
             
-            xhalfcoor = (atom_i.xcoor + atom_iplus1.xcoor)/2
-            yhalfcoor = (atom_i.ycoor + atom_iplus1.ycoor)/2
-            zhalfcoor = (atom_i.zcoor + atom_iplus1.zcoor)/2
+            xpseudocenter = (atom_i.xcoor + atom_iplus1.xcoor)/2
+            ypseudocenter = (atom_i.ycoor + atom_iplus1.ycoor)/2
+            zpseudocenter = (atom_i.zcoor + atom_iplus1.zcoor)/2
             
-            d_xhalfcoors[atom_i.res_num][atom_i.atom_name.strip()] = xhalfcoor
-            d_yhalfcoors[atom_i.res_num][atom_i.atom_name.strip()] = yhalfcoor
-            d_zhalfcoors[atom_i.res_num][atom_i.atom_name.strip()] = zhalfcoor
+            d_xpseudocenters[atom_i.res_num][atom_i.atom_name.strip()] = xpseudocenter
+            d_ypseudocenters[atom_i.res_num][atom_i.atom_name.strip()] = ypseudocenter
+            d_zpseudocenters[atom_i.res_num][atom_i.atom_name.strip()] = zpseudocenter
             
-        return (d_xhalfcoors, d_yhalfcoors, d_zhalfcoors)
+        return (d_xpseudocenters, d_ypseudocenters, d_zpseudocenters)

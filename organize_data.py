@@ -8,10 +8,10 @@ import numpy as np
 def OrganizeData(nucleus, flag='test'):
     print str(flag) + " set for nucleus " + str(nucleus)
 
-    features = []     # List for storing geometric features
-    responses = []    # List for storing cs values (responses)
-    features2 = []
-    responses2 = []
+    features = []     # List for storing geometric features for Ca coordinates
+    responses = []    # List for storing cs values (responses) corresponding to Ca coordinates
+    features2 = []	  # List for storing geometric features for pseudocenters
+    responses2 = []	  # List for storing cs values (responses) corresponding to pseudocenters
     
     # Determine whether to organize data for the training or testing set
     if flag == 'test':
@@ -51,13 +51,20 @@ def OrganizeData(nucleus, flag='test'):
         atomnames = mc.atom_names()
         
         # Get half coordinates
-        xhalfcoors, yhalfcoors, zhalfcoors = mc.halfcoors()
+        xpseudocenters, ypseudocenters, zpseudocenters = mc.pseudocenters()
         
         # Get features and responses
-        features, responses = Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zcoors)
+        features, responses = Features(features, responses, resnums[:-1], cs_info, \
+                                        nucleus, xcoors, ycoors, zcoors)
+        features2, responses2 = Features(features2, responses2, resnums[:-1], cs_info, \
+                                        nucleus, xpseudocenters, ypseudocenters, zpseudocenters)
         
         # Convert lists to numpy arrays
         features_arr = np.asarray(features)
+        features2_arr = np.asarray(features2)
         responses_arr = np.asarray(responses)
+        
+        # Concatenate the lists built from Ca coordinates and the pseudocenters
+        features_combined_arr = np.concatenate((features_arr, features2_arr), axis=1)
     
-    return(features_arr, responses_arr)
+    return(features_combined_arr, responses_arr)
