@@ -15,9 +15,9 @@ def OrganizeData(nucleus, flag='test'):
     
     # Determine whether to organize data for the training or testing set
     if flag == 'test':
-        globfiles = 'coors/A002.pdb'
+        globfiles = 'coors/A*.pdb'
     else:
-        globfiles = 'coors/R002.pdb'
+        globfiles = 'coors/R*.pdb'
         
     for filename in glob.glob(globfiles):
         
