@@ -66,5 +66,6 @@ def OrganizeData(nucleus, flag='test'):
         
         # Concatenate the lists built from Ca coordinates and the pseudocenters
         features_combined_arr = np.concatenate((features_arr, features2_arr), axis=1)
+        print features_combined_arr.shape
     
     return(features_combined_arr, responses_arr)

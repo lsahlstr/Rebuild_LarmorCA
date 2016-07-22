@@ -21,7 +21,7 @@ if __name__ == "__main__":
     X_test_scaled = preprocessing.scale(X_test)
             
     # Set the parameters for the random forest estimator    
-    estimator = RandomForestRegressor(n_estimators=50, max_features=12, max_depth=25,
+    estimator = RandomForestRegressor(n_estimators=50, max_features=16, max_depth=25,
     				min_samples_leaf=5, random_state=0)
     
     # Build the random forest of regression trees from the training set

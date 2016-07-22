@@ -283,11 +283,54 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
                 xk_plus2 = xcoors.get(k+2, {}).get('CA')
                 yk_plus2 = ycoors.get(k+2, {}).get('CA')
                 zk_plus2 = zcoors.get(k+2, {}).get('CA')
-                                     
+                
+                # Feature 29: Distance => i-1, k-2
+                f29 = abs(sqrt((xminus1-xk_minus2)**2 + (yminus1-yk_minus2)**2 + (zminus1-zk_minus2)**2))
+                
+                # Feature 30: Distance => i-1, k-1
+                f30 = abs(sqrt((xminus1-xk_minus1)**2 + (yminus1-yk_minus1)**2 + (zminus1-zk_minus1)**2))
+                
+                # Feature 31: Distance => i-1, k
+                f31 = abs(sqrt((xminus1-xk)**2 + (yminus1-yk)**2 + (zminus1-zk)**2))
+                
+                # Feature 32: Distance => i-1, k+1
+                f32 = abs(sqrt((xminus1-xk_plus1)**2 + (yminus1-yk_plus1)**2 + (zminus1-zk_plus1)**2))
+                
+                # Feature 33: Distance => i-1, k+2
+                f33 = abs(sqrt((xminus1-xk_plus2)**2 + (yminus1-yk_plus2)**2 + (zminus1-zk_plus2)**2))
+                
+                # Feature 34: Distance => i, k-2
+                f34 = abs(sqrt((x-xk_minus2)**2 + (y-yk_minus2)**2 + (z-zk_minus2)**2))
+                
+                # Feature 35: Distance => i, k-1
+                f35 = abs(sqrt((x-xk_minus1)**2 + (y-yk_minus1)**2 + (z-zk_minus1)**2))
+                
                 # Feature 36: Distance => i,k (min_dist above)
                 f36 = min_dist
                 
-                features_res_tmp = features_res_tmp + (f36,)  
+                # Feature 37: Distance => i, k+1
+                f37 = abs(sqrt((x-xk_plus1)**2 + (y-yk_plus1)**2 + (z-zk_plus1)**2))
+                
+                # Feature 38: Distance => i, k+2
+                f38 = abs(sqrt((x-xk_plus2)**2 + (y-yk_plus2)**2 + (z-zk_plus2)**2))
+                
+                # Feature 39: Distance => i+1, k-2
+                f39 = abs(sqrt((xplus1-xk_minus2)**2 + (yplus1-yk_minus2)**2 + (zplus1-zk_minus2)**2))
+                
+                # Feature 40: Distance => i+1, k-1
+                f40 = abs(sqrt((xplus1-xk_minus1)**2 + (yplus1-yk_minus1)**2 + (zplus1-zk_minus1)**2))
+                
+                # Feature 41: Distance => i+1, k
+                f41 = abs(sqrt((xplus1-xk)**2 + (yplus1-yk)**2 + (zplus1-zk)**2))
+                
+                # Feature 42: Distance => i+1, k+1
+                f42 = abs(sqrt((xplus1-xk_plus1)**2 + (yplus1-yk_plus1)**2 + (zplus1-zk_plus1)**2))
+                
+                # Feature 43: Distance => i+1, k+2
+                f43 = abs(sqrt((xplus1-xk_plus2)**2 + (yplus1-yk_plus2)**2 + (zplus1-zk_plus2)**2))
+                
+                features_res_tmp = features_res_tmp + (f29,f30,f31,f32,f33,f34,f35,f36,
+                                                        f37,f38,f39,f40,f41,f42,f43)  
                 
                 
                 features_tmp.append(features_res_tmp)
