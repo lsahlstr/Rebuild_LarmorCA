@@ -157,6 +157,30 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
             else:
                 f11 = 999.0
             
+            # Feature 12: Dihedral angle => i, i+1, i+2, i+3
+            # wiki_dihedral here: http://stackoverflow.com/questions/20305272/dihedral-torsion-angle-from-four-points-in-cartesian-coordinates-in-python
+            if xplus1 and yplus1 and zplus1 and xplus2 and yplus2 and zplus2 and xplus3 and yplus3 and zplus3:
+                p0 = np.asarray([x,y,z])
+                p1 = np.asarray([xplus1,yplus1,zplus1])
+                p2 = np.asarray([xplus2,yplus2,zplus2])
+                p3 = np.asarray([xplus3,yplus3,zplus3])
+
+                b0 = -1 * (p1 - p0)
+                b1 = p2 - p1
+                b2 = p3 - p2
+
+                tmp1 = np.cross(b0,b1)
+                tmp2 = np.cross(b2,b1)
+                tmp3 = np.cross(tmp1,tmp2)
+
+                y = np.dot(tmp3,b1) * (1.0/np.linalg.norm(b1))
+                x = np.dot(tmp1,tmp2)
+
+                f12 = np.degrees(np.arctan2(y, x))
+            else:
+                f12 = 999.0
+            
+            # Feature 13: Angle => i-2, i, i+2
             if xminus2 and yminus2 and zminus2 and xplus2 and yplus2 and zplus2:
                 d23 = abs(sqrt((x-xminus2)**2 + (y-yminus2)**2 + (z-zminus2)**2))
                 d12 = abs(sqrt((x-xplus2)**2 + (y-yplus2)**2 + (z-zplus2)**2))
@@ -165,9 +189,8 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
             else:
                 f13 = 999.0
             
-            
             # Store features that only depend on the ith residue
-            features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f13)
+            features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13)
                                 
             #### j: closest residue to i that is at least 6 residues FORWARD in sequence ####
             closest_res = 0  # WILL NEED TO STORE THIS FOR DETERMINING j+1, j+2, ETC.

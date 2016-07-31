@@ -22,7 +22,7 @@ if __name__ == "__main__":
             
     # Set the parameters for the random forest estimator    
     estimator = RandomForestRegressor(n_estimators=50, max_features=16, max_depth=25,
-    				min_samples_leaf=5, random_state=0)
+    				min_samples_split=5, min_samples_leaf=5, random_state=0)
     
     # Build the random forest of regression trees from the training set
     estimator = estimator.fit(X_train_scaled,y_train)
