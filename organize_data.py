@@ -10,8 +10,8 @@ def OrganizeData(nucleus, flag='test'):
 
     features = []     # List for storing geometric features for Ca coordinates
     responses = []    # List for storing cs values (responses) corresponding to Ca coordinates
-    features2 = []	  # List for storing geometric features for pseudocenters
-    responses2 = []	  # List for storing cs values (responses) corresponding to pseudocenters
+    features2 = []      # List for storing geometric features for pseudocenters
+    responses2 = []      # List for storing cs values (responses) corresponding to pseudocenters
     
     # Determine whether to organize data for the training or testing set
     if flag == 'test':
@@ -43,7 +43,7 @@ def OrganizeData(nucleus, flag='test'):
         xcoors = mc.xcoors()
         ycoors = mc.ycoors()
         zcoors = mc.zcoors()
-                    
+               
         # Resnum list
         resnums = list(set(mc.resnums()))
         
