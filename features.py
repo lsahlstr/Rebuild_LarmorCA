@@ -1,5 +1,5 @@
 from math import sqrt
-#import sys
+import numpy as np
 
 def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zcoors):
     '''Function for computing geometric features and returning the responses (i.e., the
@@ -148,8 +148,26 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
             else:
                 f10 = 999.0
             
+            # Feature 11: Angle => i-1, i, i+1
+            if xminus1 and yminus1 and zminus1 and xplus1 and yplus1 and zplus1:
+                d23 = abs(sqrt((x-xminus1)**2 + (y-yminus1)**2 + (z-zminus1)**2))
+                d12 = abs(sqrt((x-xplus1)**2 + (y-yplus1)**2 + (z-zplus1)**2))
+                d13 = abs(sqrt((xminus1-xplus1)**2 + (yminus1-yplus1)**2 + (zminus1-zplus1)**2))
+                f11 = np.degrees(np.arccos((d23**2 + d12**2 - d13**2)/(2 * d23 * d12)))
+            else:
+                f11 = 999.0
+            
+            if xminus2 and yminus2 and zminus2 and xplus2 and yplus2 and zplus2:
+                d23 = abs(sqrt((x-xminus2)**2 + (y-yminus2)**2 + (z-zminus2)**2))
+                d12 = abs(sqrt((x-xplus2)**2 + (y-yplus2)**2 + (z-zplus2)**2))
+                d13 = abs(sqrt((xminus2-xplus2)**2 + (yminus2-yplus2)**2 + (zminus2-zplus2)**2))
+                f13 = np.degrees(np.arccos((d23**2 + d12**2 - d13**2)/(2 * d23 * d12)))
+            else:
+                f13 = 999.0
+            
+            
             # Store features that only depend on the ith residue
-            features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10)
+            features_res_tmp = (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f13)
                                 
             #### j: closest residue to i that is at least 6 residues FORWARD in sequence ####
             closest_res = 0  # WILL NEED TO STORE THIS FOR DETERMINING j+1, j+2, ETC.
@@ -260,27 +278,27 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
             
             # Feature 25: Distance => i+1, j-1
             if xplus1 and yplus1 and zplus1 and xj_minus1 and yj_minus1 and zj_minus1:
-            	f25 = abs(sqrt((xplus1-xj_minus1)**2 + (yplus1-yj_minus1)**2 + (zplus1-zj_minus1)**2))
+                f25 = abs(sqrt((xplus1-xj_minus1)**2 + (yplus1-yj_minus1)**2 + (zplus1-zj_minus1)**2))
             else:
-            	f25 = 999.0
+                f25 = 999.0
             
             # Feature 26: Distance => i+1, j
             if xplus1 and yplus1 and zplus1 and xj and yj and zj:
-            	f26 = abs(sqrt((xplus1-xj)**2 + (yplus1-yj)**2 + (zplus1-zj)**2))
+                f26 = abs(sqrt((xplus1-xj)**2 + (yplus1-yj)**2 + (zplus1-zj)**2))
             else:
-            	f26 = 999.0
+                f26 = 999.0
             
             # Feature 27: Distance => i+1, j+1
             if xplus1 and yplus1 and zplus1 and xj_plus1 and yj_plus1 and zj_plus1:
-            	f27 = abs(sqrt((xplus1-xj_plus1)**2 + (yplus1-yj_plus1)**2 + (zplus1-zj_plus1)**2))
+                f27 = abs(sqrt((xplus1-xj_plus1)**2 + (yplus1-yj_plus1)**2 + (zplus1-zj_plus1)**2))
             else:
-            	f27 = 999.0
+                f27 = 999.0
             
             # Feature 28: Distance => i+1, j+2
             if xplus1 and yplus1 and zplus1 and xj_plus2 and yj_plus2 and zj_plus2:
-            	f28 = abs(sqrt((xplus1-xj_plus2)**2 + (yplus1-yj_plus2)**2 + (zplus1-zj_plus2)**2))
+                f28 = abs(sqrt((xplus1-xj_plus2)**2 + (yplus1-yj_plus2)**2 + (zplus1-zj_plus2)**2))
             else:
-            	f28 = 999.0
+                f28 = 999.0
 
             # Store features that depend on the ith and jth residues
             features_res_tmp = features_res_tmp + (f14,f15,f16,f17,f18,f19,f20,f21,
@@ -395,25 +413,25 @@ def Features(features, responses, resnums, cs_info, nucleus, xcoors, ycoors, zco
             
             # Feature 40: Distance => i+1, k-1
             if xplus1 and yplus1 and zplus1 and xk_minus1 and yk_minus1 and zk_minus1:
-            	f40 = abs(sqrt((xplus1-xk_minus1)**2 + (yplus1-yk_minus1)**2 + (zplus1-zk_minus1)**2))
+                f40 = abs(sqrt((xplus1-xk_minus1)**2 + (yplus1-yk_minus1)**2 + (zplus1-zk_minus1)**2))
             else:
-            	f40 = 999.0
+                f40 = 999.0
             
             # Feature 41: Distance => i+1, k
             if xplus1 and yplus1 and zplus1 and xk and yk and zk:
-            	f41 = abs(sqrt((xplus1-xk)**2 + (yplus1-yk)**2 + (zplus1-zk)**2))
+                f41 = abs(sqrt((xplus1-xk)**2 + (yplus1-yk)**2 + (zplus1-zk)**2))
             else:
-            	f41 = 999.0
+                f41 = 999.0
             
             # Feature 42: Distance => i+1, k+1
             if xplus1 and yplus1 and zplus1 and xk_plus1 and yk_plus1 and zk_plus1:
-            	f42 = abs(sqrt((xplus1-xk_plus1)**2 + (yplus1-yk_plus1)**2 + (zplus1-zk_plus1)**2))
+                f42 = abs(sqrt((xplus1-xk_plus1)**2 + (yplus1-yk_plus1)**2 + (zplus1-zk_plus1)**2))
             else:
-            	f42 = 999.0
+                f42 = 999.0
             
             # Feature 43: Distance => i+1, k+2
             if xplus1 and yplus1 and zplus1 and xk_plus2 and yk_plus2 and zk_plus2:
-            	f43 = abs(sqrt((xplus1-xk_plus2)**2 + (yplus1-yk_plus2)**2 + (zplus1-zk_plus2)**2))
+                f43 = abs(sqrt((xplus1-xk_plus2)**2 + (yplus1-yk_plus2)**2 + (zplus1-zk_plus2)**2))
             
             features_res_tmp = features_res_tmp + (f29,f30,f31,f32,f33,f34,f35,f36,
                                                     f37,f38,f39,f40,f41,f42,f43)  
